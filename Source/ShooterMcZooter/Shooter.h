@@ -27,8 +27,19 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	class USpringArmComponent* SpringArm;
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	class UCameraComponent* Camera;
+
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue);
 	void LookUp(float AxisValue);
+	void LookUpFrameRateIndependent(float AxisValue);
 	void LookRight(float AxisValue);
+	void LookRightFrameRateIndependent(float AxisValue);
+
+	UPROPERTY(EditAnywhere)
+	float FOVRotationRate = 50.f;
 };
