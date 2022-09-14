@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
+#include "Gun.h"
 #include "Shooter.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -23,7 +24,10 @@ AShooter::AShooter()
 void AShooter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
+	GetMesh()->HideBoneByName(TEXT("weapon_r"), PBO_None);
+	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));
+	Gun->SetOwner(this);
 }
 
 // Called every frame
@@ -79,4 +83,4 @@ void AShooter::LookRight(float AxisValue)
 void AShooter::LookRightFrameRateIndependent(float AxisValue)
 {
 	AddControllerYawInput(AxisValue * FOVRotationRate * GetWorld()->GetDeltaSeconds());
-}
+}}

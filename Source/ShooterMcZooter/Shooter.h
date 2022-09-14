@@ -42,4 +42,8 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float FOVRotationRate = 50.f;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class AGun> GunClass;
+	AGun* Gun;
 };
