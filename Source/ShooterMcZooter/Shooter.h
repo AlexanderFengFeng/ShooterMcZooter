@@ -39,6 +39,7 @@ private:
 	void LookUpFrameRateIndependent(float AxisValue);
 	void LookRight(float AxisValue);
 	void LookRightFrameRateIndependent(float AxisValue);
+	void Shoot();
 
 	UPROPERTY(EditAnywhere)
 	float FOVRotationRate = 50.f;

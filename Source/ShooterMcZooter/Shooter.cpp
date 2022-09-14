@@ -51,6 +51,7 @@ void AShooter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		                           this, &AShooter::LookRightFrameRateIndependent);
 	PlayerInputComponent->BindAxis(TEXT("LookRight"), this, &AShooter::LookRight);
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction(TEXT("Shoot"), EInputEvent::IE_Pressed, this, &AShooter::Shoot);
 
 }
 
@@ -83,4 +84,12 @@ void AShooter::LookRight(float AxisValue)
 void AShooter::LookRightFrameRateIndependent(float AxisValue)
 {
 	AddControllerYawInput(AxisValue * FOVRotationRate * GetWorld()->GetDeltaSeconds());
-}}
+}
+
+void AShooter::Shoot()
+{
+    if (Gun)
+    {
+		Gun->PullTrigger();
+    }
+}
