@@ -31,7 +31,7 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	USkeletalMeshComponent* Mesh;
 	UPROPERTY(EditAnywhere, Category = "Components")
-		UParticleSystem* MuzzleFlash;
+	UParticleSystem* MuzzleFlash;
 
 
 };
