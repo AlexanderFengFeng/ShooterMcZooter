@@ -30,8 +30,12 @@ private:
 	USceneComponent* Root;
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	USkeletalMeshComponent* Mesh;
-	UPROPERTY(EditAnywhere, Category = "Components")
+
+	UPROPERTY(EditAnywhere, Category = "Visuals")
 	UParticleSystem* MuzzleFlash;
+	UPROPERTY(EditAnywhere, Category = "Visuals")
+	UParticleSystem* ImpactParticle;
 
-
+	UPROPERTY(EditAnywhere)
+	float MaxRange = 2000.f;
 };
