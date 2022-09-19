@@ -28,6 +28,7 @@ void AShooter::BeginPlay()
 	GetMesh()->HideBoneByName(TEXT("weapon_r"), PBO_None);
 	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));
 	Gun->SetOwner(this);
+	Health = MaxHealth;
 }
 
 // Called every frame
@@ -81,6 +82,7 @@ void AShooter::LookRight(float AxisValue)
 	AddControllerYawInput(AxisValue);
 }
 
+
 void AShooter::LookRightFrameRateIndependent(float AxisValue)
 {
 	AddControllerYawInput(AxisValue * FOVRotationRate * GetWorld()->GetDeltaSeconds());
@@ -92,4 +94,21 @@ void AShooter::Shoot()
     {
 		Gun->PullTrigger();
     }
+}
+
+float AShooter::TakeDamage(
+	float DamageAmount,
+	FDamageEvent const& DamageEvent, 
+	AController* EventInstigator,
+	AActor* DamageCauser)
+{
+	float DamageToApply = Super::TakeDamage(
+		DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	DamageToApply = FMath::Min(Health, DamageToApply);
+	Health -= DamageToApply;
+	if (Health <= 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("YOU DIED"));
+	}
+	return DamageToApply;
 }

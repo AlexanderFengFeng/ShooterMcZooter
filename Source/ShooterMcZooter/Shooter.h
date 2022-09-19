@@ -47,4 +47,11 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class AGun> GunClass;
 	AGun* Gun;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	float MaxHealth = 100.f;
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	float Health = MaxHealth;
+
+	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 };
