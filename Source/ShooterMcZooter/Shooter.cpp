@@ -114,8 +114,7 @@ float AShooter::TakeDamage(
 	Health -= DamageToApply;
 	if (IsDead())
 	{
-		// TODO: Disable the collision on the actor.
-		UE_LOG(LogTemp, Warning, TEXT("YOU DIED"));
+		SetActorEnableCollision(false);
 	}
 	return DamageToApply;
 }
