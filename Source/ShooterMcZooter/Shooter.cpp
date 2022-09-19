@@ -56,6 +56,12 @@ void AShooter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+bool AShooter::IsDead() const
+{
+	return Health <= 0;
+}
+
+
 void AShooter::MoveForward(float AxisValue)
 {
 	AddMovementInput(GetActorForwardVector() * AxisValue);
@@ -106,8 +112,9 @@ float AShooter::TakeDamage(
 		DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	DamageToApply = FMath::Min(Health, DamageToApply);
 	Health -= DamageToApply;
-	if (Health <= 0)
+	if (IsDead())
 	{
+		// TODO: Disable the collision on the actor.
 		UE_LOG(LogTemp, Warning, TEXT("YOU DIED"));
 	}
 	return DamageToApply;
