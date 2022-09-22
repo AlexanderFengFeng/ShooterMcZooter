@@ -23,4 +23,5 @@ protected:
 private:
 	UPROPERTY(EditAnywhere)
 	UBehaviorTree* AIBehavior;
+	UBlackboardComponent* AIBlackboard;
 };

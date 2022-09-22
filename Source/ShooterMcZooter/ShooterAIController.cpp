@@ -11,6 +11,8 @@ void AShooterAIController::BeginPlay()
     if (AIBehavior)
     {
         RunBehaviorTree(AIBehavior);
+        AIBlackboard = GetBlackboardComponent();
+        AIBlackboard->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
     }
 }
 
@@ -18,7 +20,6 @@ void AShooterAIController::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
     APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-    UBlackboardComponent* AIBlackboard = GetBlackboardComponent();
 
     if (LineOfSightTo(PlayerPawn))
     {
