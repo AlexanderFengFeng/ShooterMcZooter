@@ -14,9 +14,9 @@ EBTNodeResult::Type UBTTask_Shoot::ExecuteTask(UBehaviorTreeComponent& OwnerComp
 {
     Super::ExecuteTask(OwnerComp, NodeMemory);
 
-    if (auto AIController = OwnerComp.GetAIOwner())
+    if (auto Controller = OwnerComp.GetAIOwner())
     {
-        if (AShooter* AIShooter = Cast<AShooter>(AIController->GetPawn()))
+        if (AShooter* AIShooter = Cast<AShooter>(Controller->GetPawn()))
         {
             AIShooter->Shoot();
             return EBTNodeResult::Succeeded;
