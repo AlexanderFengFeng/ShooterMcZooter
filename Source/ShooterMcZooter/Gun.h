@@ -36,6 +36,11 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Visuals")
 	UParticleSystem* ImpactParticle;
 
+	UPROPERTY(EditAnywhere, Category = "Sounds")
+	USoundBase* MuzzleSound;
+	UPROPERTY(EditAnywhere, Category = "Sounds")
+	USoundBase* ImpactSound;
+
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	float MaxRange = 2000.f;
 	UPROPERTY(EditAnywhere, Category = "Combat")
