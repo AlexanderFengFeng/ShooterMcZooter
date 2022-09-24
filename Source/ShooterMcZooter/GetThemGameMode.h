@@ -17,4 +17,7 @@ class SHOOTERMCZOOTER_API AGetThemGameMode : public AShooterMcZooterGameModeBase
 public:
 	virtual void PawnKilled(APawn* PawnKilled) override;
 
+private:
+	void EndGame(bool bIsPlayerWinner);
+
 };
