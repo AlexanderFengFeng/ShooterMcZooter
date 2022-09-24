@@ -17,5 +17,11 @@ class SHOOTERMCZOOTER_API AShooterPlayerController : public APlayerController
 public:
 
 	virtual void GameHasEnded(AActor* EndGameFocus, bool bIsWinner) override;
-	
+
+private:
+
+	UPROPERTY(EditAnywhere)
+	float RestartDelay = 5.f;
+
+	FTimerHandle RestartTimer;
 };
