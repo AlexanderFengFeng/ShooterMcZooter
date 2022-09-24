@@ -123,7 +123,7 @@ float AShooter::TakeDamage(
 void AShooter::Die()
 {
 	SetActorEnableCollision(false);
-	DetachFromControllerPendingDestroy();
 	AShooterMcZooterGameModeBase* GameMode = GetWorld()->GetAuthGameMode<AShooterMcZooterGameModeBase>();
 	GameMode->PawnKilled(this);
+	DetachFromControllerPendingDestroy();
 }
