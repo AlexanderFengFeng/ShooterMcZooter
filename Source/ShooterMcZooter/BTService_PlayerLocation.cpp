@@ -7,7 +7,7 @@
 
 UBTService_PlayerLocation::UBTService_PlayerLocation()
 {
-    NodeName = TEXT("Update Player Location");
+    NodeName = TEXT("Update Last Known Player Location");
 }
 
 

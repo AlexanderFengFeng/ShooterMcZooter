@@ -27,7 +27,7 @@ void UBTService_PlayerLocationIfSeen::TickNode(
     {
         if (Controller->LineOfSightTo(PlayerPawn))
         {
-            AIBlackboard->SetValueAsVector(GetSelectedBlackboardKey(), PlayerPawn->GetActorLocation());
+            AIBlackboard->SetValueAsObject(GetSelectedBlackboardKey(), PlayerPawn);
         }
         else
         {
