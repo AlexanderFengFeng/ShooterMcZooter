@@ -32,28 +32,13 @@ void AGun::PullTrigger()
 {
 	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleFlashSocket"));
 
-	// Assign the owner and its controller to get the player view point.
-	APawn* OwnerPawn = Cast<APawn>(GetOwner());
-	if (!OwnerPawn) return;
-	AController* OwnerController = OwnerPawn->GetController();
-	if (!OwnerController) return;
-
-	// Get the player viewpoint, projecting based on MaxRange.
-	FVector Location;
-	FRotator Rotation;
-	OwnerController->GetPlayerViewPoint(Location, Rotation);
-	FVector End = Location + Rotation.Vector() * MaxRange;
-
 	// Generate an FHitResult.
 	FHitResult Hit;
-	FCollisionQueryParams Params;
-	Params.AddIgnoredActors(TArray<AActor*> { this, GetOwner() });
+	FVector ShotDirection;
+	AController* OwnerController;
 
-	bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, Location, End, ECC_GameTraceChannel1, Params);
-
-	if (bSuccess)
+	if (GunTrace(Hit, ShotDirection, OwnerController))
 	{
-		FVector ShotDirection = -Rotation.Vector();
 		UGameplayStatics::SpawnEmitterAtLocation(this, ImpactParticle, Hit.Location, ShotDirection.Rotation());
 		if (AActor* Actor = Hit.GetActor())
 		{
@@ -61,4 +46,25 @@ void AGun::PullTrigger()
 			Actor->TakeDamage(Damage, DamageEvent, OwnerController, this);
 		}
 	}
+}
+
+bool AGun::GunTrace(FHitResult& Hit, FVector& ShotDirection, AController*& OwnerController)
+{
+	// Assign the owner and its controller to get the player view point.
+	APawn* OwnerPawn = Cast<APawn>(GetOwner());
+	if (!OwnerPawn) return false;
+	OwnerController = OwnerPawn->GetController();
+	if (!OwnerController) return false;
+
+	// Get the player viewpoint, projecting based on MaxRange.
+	FVector Location;
+	FRotator Rotation;
+	OwnerController->GetPlayerViewPoint(Location, Rotation);
+	ShotDirection = -Rotation.Vector();
+	FVector End = Location + Rotation.Vector() * MaxRange;
+
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActors(TArray<AActor*> { this, GetOwner() });
+
+    return GetWorld()->LineTraceSingleByChannel(Hit, Location, End, ECC_GameTraceChannel1, Params);
 }
