@@ -1,9 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
+#include "GetThemGameMode.h"
 #include "EngineUtils.h"
 #include "GameFramework/Controller.h"
-#include "GetThemGameMode.h"
+#include "ShooterAIController.h"
 
 void AGetThemGameMode::PawnKilled(APawn* PawnKilled)
 {
@@ -14,6 +15,14 @@ void AGetThemGameMode::PawnKilled(APawn* PawnKilled)
     {
         EndGame(false);
     }
+    for (AShooterAIController* Controller : TActorRange<AShooterAIController>(GetWorld()))
+    {
+        if (!Controller->IsDead())
+        {
+            return;
+        }
+    }
+    EndGame(true);
 }
 
 void AGetThemGameMode::EndGame(bool bIsPlayerWinner)
