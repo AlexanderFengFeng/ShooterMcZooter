@@ -4,6 +4,7 @@
 #include "Gun.h"
 #include "Shooter.h"
 #include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -114,7 +115,13 @@ float AShooter::TakeDamage(
 	Health -= DamageToApply;
 	if (IsDead())
 	{
-		SetActorEnableCollision(false);
+		Die();
 	}
 	return DamageToApply;
+}
+
+void AShooter::Die()
+{
+	SetActorEnableCollision(false);
+	DetachFromControllerPendingDestroy();
 }
