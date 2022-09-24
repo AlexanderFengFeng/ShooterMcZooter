@@ -3,8 +3,8 @@
 
 #include "Gun.h"
 #include "Shooter.h"
+#include "ShooterMcZooterGameModeBase.h"
 #include "Camera/CameraComponent.h"
-#include "Components/CapsuleComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -124,4 +124,6 @@ void AShooter::Die()
 {
 	SetActorEnableCollision(false);
 	DetachFromControllerPendingDestroy();
+	AShooterMcZooterGameModeBase* GameMode = GetWorld()->GetAuthGameMode<AShooterMcZooterGameModeBase>();
+	GameMode->PawnKilled(this);
 }

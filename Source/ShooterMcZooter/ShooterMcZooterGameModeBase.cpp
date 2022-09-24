@@ -3,3 +3,7 @@
 
 #include "ShooterMcZooterGameModeBase.h"
 
+void AShooterMcZooterGameModeBase::PawnKilled(APawn* PawnKilled)
+{
+    
+}
