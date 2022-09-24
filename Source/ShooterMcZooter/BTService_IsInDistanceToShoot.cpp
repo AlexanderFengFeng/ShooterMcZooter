@@ -28,10 +28,6 @@ void UBTService_IsInDistanceToShoot::TickNode(
     {
         float Distance = FVector::Dist(PlayerPawn->GetActorLocation(),
                                        Controller->GetPawn()->GetActorLocation());
-        UE_LOG(LogTemp, Warning, TEXT("Player: %s"), *PlayerPawn->GetActorLocation().ToString());
-        UE_LOG(LogTemp, Warning, TEXT("AI: %s"), *Controller->GetPawn()->GetActorLocation().ToString());
-        UE_LOG(LogTemp, Warning, TEXT("Distance: %f"), Distance);
         AIBlackboard->SetValueAsBool(GetSelectedBlackboardKey(), Distance <= DistanceToShoot);
-
     }
 }
