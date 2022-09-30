@@ -27,7 +27,18 @@ private:
 
 	UPROPERTY(EditDefaultsOnly);
 	TSubclassOf<AActor> ActorClass;
+	FTimerHandle SpawnTimerControllingRateIncrease;
 	FTimerHandle SpawnTimer;
-	float SpawnRate = 10.f;
+
+	float InitialSpawnDelayMinValue = 5.f;
+	float InitialSpawnDelayMaxValue = 10.f;
+
+	float DecreaseInDelayPerIteration = 1.f;
+	float MinimumLoopingDelay = 5.f;
+
+	float InitialSpawnDelay = 15.f;
+	float SpawnDelay = InitialSpawnDelay;
+
 	void Spawn();
+	void SpawnDelegateWithIncreasingRateInfinitely();
 };

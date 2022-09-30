@@ -19,14 +19,12 @@ AActorSpawner::AActorSpawner()
 void AActorSpawner::BeginPlay()
 {
 	Super::BeginPlay();
-	float InFirstDelay = FMath::FRandRange(5.f, 10.f);
 	GetWorldTimerManager().SetTimer(
-		SpawnTimer,
+		SpawnTimerControllingRateIncrease,
 		this,
-		&AActorSpawner::Spawn,
-		SpawnRate,
-		true,
-		InFirstDelay);
+		&AActorSpawner::SpawnDelegateWithIncreasingRateInfinitely,
+		FMath::FRandRange(InitialSpawnDelayMinValue, InitialSpawnDelayMaxValue),
+		false);
 }
 
 // Called every frame
@@ -40,4 +38,15 @@ void AActorSpawner::Spawn()
 	GetWorld()->SpawnActor<AActor>(
 		ActorClass,GetActorLocation(),
 		FRotator(0.f,UKismetMathLibrary::RandomRotator().Yaw, 0.f));
+}
+
+void AActorSpawner::SpawnDelegateWithIncreasingRateInfinitely()
+{
+	Spawn();
+	GetWorldTimerManager().SetTimer(
+		SpawnTimer,
+		this,
+		&AActorSpawner::SpawnDelegateWithIncreasingRateInfinitely,
+		SpawnDelay);
+	SpawnDelay = FMath::Max(MinimumLoopingDelay, SpawnDelay - DecreaseInDelayPerIteration);
 }
