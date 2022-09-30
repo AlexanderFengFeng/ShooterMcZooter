@@ -5,6 +5,7 @@
 #include "Shooter.h"
 #include "ShooterMcZooterGameModeBase.h"
 #include "Camera/CameraComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -25,6 +26,8 @@ AShooter::AShooter()
 void AShooter::BeginPlay()
 {
 	Super::BeginPlay();
+	MovementComponent = Cast<UCharacterMovementComponent>(GetCharacterMovement());
+	DefaultWalkSpeed = MovementComponent->MaxWalkSpeed;
 	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
 	GetMesh()->HideBoneByName(TEXT("weapon_r"), PBO_None);
 	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));
@@ -54,7 +57,8 @@ void AShooter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis(TEXT("LookRight"), this, &AShooter::LookRight);
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction(TEXT("Shoot"), EInputEvent::IE_Pressed, this, &AShooter::Shoot);
-
+	PlayerInputComponent->BindAction(TEXT("Sprint"), EInputEvent::IE_Pressed, this, &AShooter::Sprint);
+	PlayerInputComponent->BindAction(TEXT("Sprint"), EInputEvent::IE_Released, this, &AShooter::StopSprinting);
 }
 
 bool AShooter::IsDead() const
@@ -106,6 +110,22 @@ void AShooter::Shoot()
     {
 		Gun->PullTrigger();
     }
+}
+
+void AShooter::Sprint()
+{
+	if (MovementComponent)
+	{
+	    MovementComponent->MaxWalkSpeed = DefaultWalkSpeed * SprintMultiplier;
+	}
+}
+
+void AShooter::StopSprinting()
+{
+	if (MovementComponent)
+	{
+		MovementComponent->MaxWalkSpeed = DefaultWalkSpeed;
+	}
 }
 
 float AShooter::TakeDamage(

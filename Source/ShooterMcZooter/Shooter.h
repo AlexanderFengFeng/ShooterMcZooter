@@ -47,6 +47,15 @@ private:
 	void LookRight(float AxisValue);
 	void LookRightFrameRateIndependent(float AxisValue);
 
+	class UCharacterMovementComponent* MovementComponent;
+	bool bIsSprinting = false;
+	void Sprint();
+	void StopSprinting();
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float DefaultWalkSpeed;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float SprintMultiplier = 1.5f;
+
 	UPROPERTY(EditAnywhere)
 	float FOVRotationRate = 50.f;
 
