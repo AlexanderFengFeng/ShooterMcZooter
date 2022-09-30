@@ -81,4 +81,6 @@ private:
 
 	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 	void Die();
+	void DestroyDelegate();
+	float DestroyDelay = 5.f;
 };

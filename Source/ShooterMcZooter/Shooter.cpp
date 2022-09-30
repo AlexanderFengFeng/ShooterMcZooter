@@ -179,4 +179,19 @@ void AShooter::Die()
 	AShooterMcZooterGameModeBase* GameMode = GetWorld()->GetAuthGameMode<AShooterMcZooterGameModeBase>();
 	GameMode->PawnKilled(this);
 	DetachFromControllerPendingDestroy();
+	FTimerHandle DestroyTimer;
+	GetWorldTimerManager().SetTimer(
+		DestroyTimer,
+		this,
+		&AShooter::DestroyDelegate,
+		DestroyDelay);
+}
+
+void AShooter::DestroyDelegate()
+{
+	if (Gun)
+	{
+	    Gun->Destroy();
+	}
+	Destroy();
 }
