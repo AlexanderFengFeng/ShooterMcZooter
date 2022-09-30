@@ -119,7 +119,7 @@ void AShooter::Shoot()
 
 void AShooter::Sprint()
 {
-	if (MovementComponent && CanSprint())
+	if (MovementComponent && bCanSprint)
 	{
 		bIsSprinting = true;
 	    MovementComponent->MaxWalkSpeed = DefaultWalkSpeed * SprintMultiplier;

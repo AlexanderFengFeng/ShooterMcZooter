@@ -58,7 +58,7 @@ private:
 	void StopSprinting();
 	float DefaultWalkSpeed;
 	UPROPERTY(EditAnywhere, Category = "Movement")
-	float SprintMultiplier = 1.5f;
+	float SprintMultiplier = 2.f;
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float MaxStaminaInSeconds = 4.f;
 	UPROPERTY(EditAnywhere, Category = "Movement")
