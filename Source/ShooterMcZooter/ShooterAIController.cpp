@@ -9,6 +9,11 @@
 void AShooterAIController::BeginPlay()
 {
     Super::BeginPlay();
+}
+
+void AShooterAIController::OnPossess(APawn* InPawn)
+{
+    Super::OnPossess(InPawn);
     if (AIBehavior)
     {
         RunBehaviorTree(AIBehavior);
