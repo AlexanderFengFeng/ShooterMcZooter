@@ -51,10 +51,16 @@ private:
 	bool bIsSprinting = false;
 	void Sprint();
 	void StopSprinting();
-	UPROPERTY(EditAnywhere, Category = "Movement")
 	float DefaultWalkSpeed;
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float SprintMultiplier = 1.5f;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float MaxStaminaInSeconds = 4.f;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float StaminaInSeconds = MaxStaminaInSeconds;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float StaminaCanSprintInSeconds = 2.f;
+	void UpdateStamina(float DeltaTime);
 
 	UPROPERTY(EditAnywhere)
 	float FOVRotationRate = 50.f;

@@ -7,6 +7,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "GenericPlatform/GenericPlatformMath.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
@@ -39,7 +40,8 @@ void AShooter::BeginPlay()
 void AShooter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	UpdateStamina(DeltaTime);
+	UE_LOG(LogTemp, Warning, TEXT("%f"), StaminaInSeconds);
 }
 
 // Called to bind functionality to input
@@ -114,8 +116,9 @@ void AShooter::Shoot()
 
 void AShooter::Sprint()
 {
-	if (MovementComponent)
+	if (MovementComponent && StaminaInSeconds >= StaminaCanSprintInSeconds)
 	{
+		bIsSprinting = true;
 	    MovementComponent->MaxWalkSpeed = DefaultWalkSpeed * SprintMultiplier;
 	}
 }
@@ -124,8 +127,25 @@ void AShooter::StopSprinting()
 {
 	if (MovementComponent)
 	{
+		bIsSprinting = false;
 		MovementComponent->MaxWalkSpeed = DefaultWalkSpeed;
 	}
+}
+
+void AShooter::UpdateStamina(float DeltaTime)
+{
+    if (bIsSprinting && StaminaInSeconds > 0)
+    {
+		StaminaInSeconds = FGenericPlatformMath::Max(0, StaminaInSeconds - DeltaTime);
+		if (StaminaInSeconds == 0)
+		{
+			StopSprinting();
+		}
+    }
+    else if (!bIsSprinting && StaminaInSeconds < MaxStaminaInSeconds)
+    {
+		StaminaInSeconds = FGenericPlatformMath::Min(MaxStaminaInSeconds, StaminaInSeconds + DeltaTime);
+    }
 }
 
 float AShooter::TakeDamage(
