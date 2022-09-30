@@ -15,7 +15,7 @@ class SHOOTERMCZOOTER_API AShooterMcZooterGameModeBase : public AGameModeBase
 	GENERATED_BODY()
 
 protected:
-	bool bGameIsEnding;
+	bool bGameIsEnding = false;
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void BeginPlay() override;
 
