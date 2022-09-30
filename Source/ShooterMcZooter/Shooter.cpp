@@ -41,7 +41,6 @@ void AShooter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	UpdateStamina(DeltaTime);
-	UE_LOG(LogTemp, Warning, TEXT("%f"), StaminaInSeconds);
 }
 
 // Called to bind functionality to input
@@ -73,6 +72,10 @@ float AShooter::GetHealthPercent() const
 	return Health / MaxHealth;
 }
 
+float AShooter::GetStaminaPercent() const
+{
+	return StaminaInSeconds / MaxStaminaInSeconds;
+}
 
 void AShooter::MoveForward(float AxisValue)
 {
@@ -116,7 +119,7 @@ void AShooter::Shoot()
 
 void AShooter::Sprint()
 {
-	if (MovementComponent && StaminaInSeconds >= StaminaCanSprintInSeconds)
+	if (MovementComponent && CanSprint())
 	{
 		bIsSprinting = true;
 	    MovementComponent->MaxWalkSpeed = DefaultWalkSpeed * SprintMultiplier;
@@ -134,16 +137,21 @@ void AShooter::StopSprinting()
 
 void AShooter::UpdateStamina(float DeltaTime)
 {
-    if (bIsSprinting && StaminaInSeconds > 0)
+    if (bIsSprinting)
     {
 		StaminaInSeconds = FGenericPlatformMath::Max(0, StaminaInSeconds - DeltaTime);
 		if (StaminaInSeconds == 0)
 		{
+			bCanSprint = false;
 			StopSprinting();
 		}
     }
-    else if (!bIsSprinting && StaminaInSeconds < MaxStaminaInSeconds)
+    else if (!bIsSprinting)
     {
+		if (StaminaInSeconds >= StaminaCanSprintInSeconds)
+		{
+			bCanSprint = true;
+		}
 		StaminaInSeconds = FGenericPlatformMath::Min(MaxStaminaInSeconds, StaminaInSeconds + DeltaTime);
     }
 }

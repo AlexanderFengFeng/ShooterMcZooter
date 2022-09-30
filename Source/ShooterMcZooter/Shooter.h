@@ -30,6 +30,10 @@ public:
 	bool IsDead() const;
 	UFUNCTION(BlueprintPure)
 	float GetHealthPercent() const;
+	UFUNCTION(BlueprintPure)
+	float GetStaminaPercent() const;
+	UFUNCTION(BlueprintPure)
+	bool CanSprint() const { return bCanSprint;  };
 
 	void Shoot();
 
@@ -49,6 +53,7 @@ private:
 
 	class UCharacterMovementComponent* MovementComponent;
 	bool bIsSprinting = false;
+	bool bCanSprint = true;
 	void Sprint();
 	void StopSprinting();
 	float DefaultWalkSpeed;
