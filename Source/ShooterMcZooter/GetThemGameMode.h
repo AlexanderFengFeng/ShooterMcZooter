@@ -15,9 +15,17 @@ class SHOOTERMCZOOTER_API AGetThemGameMode : public AShooterMcZooterGameModeBase
 	GENERATED_BODY()
 
 public:
+	AGetThemGameMode();
+
+protected:
+	virtual void Tick(float DeltaSeconds) override;
+	virtual void BeginPlay() override;
+
+public:
 	virtual void PawnKilled(APawn* PawnKilled) override;
 
 private:
 	void EndGame(bool bIsPlayerWinner);
-
+	float TimeElapsed;
+	const FString HighScoreKey = TEXT("Get Them!");
 };
