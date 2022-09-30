@@ -27,5 +27,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly);
 	TSubclassOf<AActor> ActorClass;
-
+	FTimerHandle SpawnTimer;
+	float SpawnRate = 10.f;
+	void Spawn();
 };

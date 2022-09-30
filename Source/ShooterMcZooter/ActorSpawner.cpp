@@ -3,6 +3,8 @@
 
 #include "ActorSpawner.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Math/UnrealMathUtility.h"
+#include "TimerManager.h"
 
 
 // Sets default values
@@ -17,10 +19,14 @@ AActorSpawner::AActorSpawner()
 void AActorSpawner::BeginPlay()
 {
 	Super::BeginPlay();
-	//if (ActorClass)
-	//{
-	//    GetWorld()->SpawnActor<AActor>(ActorClass, GetActorLocation(), GetActorRotation());
-	//}
+	float InFirstDelay = FMath::FRandRange(5.f, 10.f);
+	GetWorldTimerManager().SetTimer(
+		SpawnTimer,
+		this,
+		&AActorSpawner::Spawn,
+		SpawnRate,
+		true,
+		InFirstDelay);
 }
 
 // Called every frame
@@ -29,3 +35,9 @@ void AActorSpawner::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+void AActorSpawner::Spawn()
+{
+	GetWorld()->SpawnActor<AActor>(
+		ActorClass,GetActorLocation(),
+		FRotator(0.f,UKismetMathLibrary::RandomRotator().Yaw, 0.f));
+}
