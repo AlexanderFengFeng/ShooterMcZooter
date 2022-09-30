@@ -4,6 +4,7 @@
 #include "ActorSpawner.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Math/UnrealMathUtility.h"
+#include "ShooterMcZooterGameModeBase.h"
 #include "TimerManager.h"
 
 
@@ -19,6 +20,7 @@ AActorSpawner::AActorSpawner()
 void AActorSpawner::BeginPlay()
 {
 	Super::BeginPlay();
+	GameMode = GetWorld()->GetAuthGameMode<AShooterMcZooterGameModeBase>();
 	GetWorldTimerManager().SetTimer(
 		SpawnTimerControllingRateIncrease,
 		this,
@@ -31,6 +33,11 @@ void AActorSpawner::BeginPlay()
 void AActorSpawner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (GameMode->IsGameEnding())
+	{
+		GetWorldTimerManager().ClearTimer(SpawnTimerControllingRateIncrease);
+		GetWorldTimerManager().ClearTimer(SpawnTimer);
+	}
 }
 
 void AActorSpawner::Spawn()

@@ -24,7 +24,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-
+	class AShooterMcZooterGameModeBase* GameMode;
 	UPROPERTY(EditDefaultsOnly);
 	TSubclassOf<AActor> ActorClass;
 	FTimerHandle SpawnTimerControllingRateIncrease;
