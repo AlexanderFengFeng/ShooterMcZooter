@@ -14,7 +14,12 @@ class SHOOTERMCZOOTER_API AShooterMcZooterGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 
+protected:
+	bool bGameIsEnding;
+	virtual void Tick(float DeltaSeconds) override;
+	virtual void BeginPlay() override;
+
 public:
 	virtual void PawnKilled(APawn* PawnKilled);
-	
+	bool IsGameEnding() const { return bGameIsEnding; }
 };
