@@ -18,7 +18,11 @@ private:
 	TMap<FString, int32> HighScores;
 
 public:
-	void AddOrUpdateToHighScores(FString Key, int32 Value);
-	int32 GetValueInHighScores(FString Key) const;
+	bool AddOrUpdateHighScore(FString Key, int32 Score);
+	UFUNCTION(BlueprintPure)
+	int32 GetHighScore(FString Key) const;
+	UFUNCTION(BlueprintPure)
+	int32 IsScoreGreaterThanHighScore(FString Key, int32 Score) const;
+	UFUNCTION(BlueprintPure)
 	bool HasHadPreviousHighScore(FString Key) const;
 };

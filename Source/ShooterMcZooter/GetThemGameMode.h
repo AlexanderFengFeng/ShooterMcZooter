@@ -20,12 +20,13 @@ public:
 protected:
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void BeginPlay() override;
+	FString HighScoreKey = TEXT("Get Them!");
 
 public:
 	virtual void PawnKilled(APawn* PawnKilled) override;
+	virtual int32 GetScore() const override;
 
 private:
 	void EndGame(bool bIsPlayerWinner);
-	float TimeElapsed;
-	const FString HighScoreKey = TEXT("Get Them!");
+	float TimeLeft = 30.f;
 };

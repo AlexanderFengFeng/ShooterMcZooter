@@ -22,7 +22,14 @@ void AGetThemGameMode::BeginPlay()
 void AGetThemGameMode::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
-    TimeElapsed += DeltaSeconds;
+    if (!bGameIsEnding)
+    {
+        TimeLeft -= DeltaSeconds;
+    }
+    if (TimeLeft <= 0)
+    {
+        EndGame(false);
+    }
 }
 
 
@@ -52,15 +59,16 @@ void AGetThemGameMode::EndGame(bool bIsPlayerWinner)
         if (bIsPlayerWinner)
         {
             UShooterGameInstance* GameInstance = Cast<UShooterGameInstance>(GetGameInstance());
-            int32 TimeElapsedInInt = int32(TimeElapsed);
-            if (GameInstance->HasHadPreviousHighScore(HighScoreKey))
-            {
-                TimeElapsedInInt = FMath::Max(TimeElapsedInInt, GameInstance->GetValueInHighScores(HighScoreKey));
-            }
-            GameInstance->AddOrUpdateToHighScores(HighScoreKey, TimeElapsedInInt);
+            int32 TimeLeftInInt = FMath::FloorToInt32(TimeLeft);
+            GameInstance->AddOrUpdateHighScore(HighScoreKey, TimeLeftInInt);
         }
         bool bIsWinner = Controller->IsPlayerController() == bIsPlayerWinner;
         Controller->GameHasEnded(Controller->GetPawn(), bIsWinner);
         bGameIsEnding = true;
     }
+}
+
+int32 AGetThemGameMode::GetScore() const
+{
+    return FMath::FloorToInt32(TimeLeft);
 }

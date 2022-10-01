@@ -3,12 +3,22 @@
 
 #include "ShooterGameInstance.h"
 
-void UShooterGameInstance::AddOrUpdateToHighScores(FString Key, int32 Value)
+bool UShooterGameInstance::AddOrUpdateHighScore(FString Key, int32 Score)
 {
-    HighScores.Emplace(Key, Value);
+    if (!HasHadPreviousHighScore(Key) || IsScoreGreaterThanHighScore(Key, Score))
+    {
+        HighScores.Emplace(Key, Score);
+        return true;
+    }
+    return false;
 }
 
-int32 UShooterGameInstance::GetValueInHighScores(FString Key) const
+int32 UShooterGameInstance::IsScoreGreaterThanHighScore(FString Key, int32 Score) const
+{
+    return Score > GetHighScore(Key);
+}
+
+int32 UShooterGameInstance::GetHighScore(FString Key) const
 {
     return HighScores[Key];
 }
