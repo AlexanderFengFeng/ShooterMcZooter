@@ -5,7 +5,6 @@
 #include "EngineUtils.h"
 #include "GameFramework/Controller.h"
 #include "ShooterAIController.h"
-#include "ShooterGameInstance.h"
 
 
 AGetThemGameMode::AGetThemGameMode()
@@ -54,7 +53,7 @@ void AGetThemGameMode::PawnKilled(APawn* PawnKilled)
 
 void AGetThemGameMode::EndGame(bool bIsPlayerWinner)
 {
-    bGameIsEnding = true;
+    Super::EndGame();
     for (AController* Controller : TActorRange<AController>(GetWorld()))
     {
         bool bIsWinner = Controller->IsPlayerController() == bIsPlayerWinner;

@@ -20,12 +20,12 @@ public:
 protected:
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void BeginPlay() override;
+	virtual void EndGame(bool bIsPlayerWinner) override;
 
 public:
 	virtual void PawnKilled(APawn* PawnKilled) override;
 	virtual int32 GetScore() const override;
 
 private:
-	void EndGame(bool bIsPlayerWinner);
 	float TimeLeft = 30.f;
 };

@@ -18,6 +18,8 @@ protected:
 	bool bGameIsEnding = false;
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void BeginPlay() override;
+	virtual void EndGame() { bGameIsEnding = true; }
+	virtual void EndGame(bool bIsPlayerWinner) { bGameIsEnding = true; }
 
 public:
 	virtual void PawnKilled(APawn* PawnKilled);
