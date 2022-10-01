@@ -18,13 +18,10 @@ protected:
 	bool bGameIsEnding = false;
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void BeginPlay() override;
-	FString HighScoreKey;
 
 public:
 	virtual void PawnKilled(APawn* PawnKilled);
 	bool IsGameEnding() const { return bGameIsEnding; }
 	UFUNCTION(BlueprintPure)
 	virtual int32 GetScore() const { return 0; }
-	UFUNCTION(BlueprintPure)
-	virtual FString GetHighScoreKey() const { return HighScoreKey; }
 };

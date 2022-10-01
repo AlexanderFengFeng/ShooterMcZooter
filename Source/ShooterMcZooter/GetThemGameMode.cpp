@@ -54,17 +54,11 @@ void AGetThemGameMode::PawnKilled(APawn* PawnKilled)
 
 void AGetThemGameMode::EndGame(bool bIsPlayerWinner)
 {
+    bGameIsEnding = true;
     for (AController* Controller : TActorRange<AController>(GetWorld()))
     {
-        if (bIsPlayerWinner)
-        {
-            UShooterGameInstance* GameInstance = Cast<UShooterGameInstance>(GetGameInstance());
-            int32 TimeLeftInInt = FMath::FloorToInt32(TimeLeft);
-            GameInstance->AddOrUpdateHighScore(HighScoreKey, TimeLeftInInt);
-        }
         bool bIsWinner = Controller->IsPlayerController() == bIsPlayerWinner;
         Controller->GameHasEnded(Controller->GetPawn(), bIsWinner);
-        bGameIsEnding = true;
     }
 }
 

@@ -15,14 +15,13 @@ class SHOOTERMCZOOTER_API UShooterGameInstance : public UGameInstance
 	GENERATED_BODY()
 
 private:
-	TMap<FString, int32> HighScores;
+	int32 HighScore = 0;
 
 public:
-	bool AddOrUpdateHighScore(FString Key, int32 Score);
+	UFUNCTION(BlueprintCallable)
+	bool TryToUpdateHighScore(int32 Score);
 	UFUNCTION(BlueprintPure)
-	int32 GetHighScore(FString Key) const;
+	int32 GetHighScore() const { return HighScore; }
 	UFUNCTION(BlueprintPure)
-	int32 IsScoreGreaterThanHighScore(FString Key, int32 Score) const;
-	UFUNCTION(BlueprintPure)
-	bool HasHadPreviousHighScore(FString Key) const;
+	bool IsScoreGreaterThanHighScore(int32 Score) const { return Score > HighScore; };
 };
