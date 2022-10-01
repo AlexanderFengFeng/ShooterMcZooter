@@ -25,7 +25,7 @@ void AGetThemGameMode::Tick(float DeltaSeconds)
     {
         TimeLeft -= DeltaSeconds;
     }
-    if (TimeLeft <= 0)
+    if (TimeLeft <= 0 && !bGameIsEnding)
     {
         EndGame(false);
     }
@@ -35,6 +35,7 @@ void AGetThemGameMode::Tick(float DeltaSeconds)
 void AGetThemGameMode::PawnKilled(APawn* PawnKilled)
 {
     Super::PawnKilled(PawnKilled);
+    if (bGameIsEnding) return;
 
     APlayerController* PlayerController = Cast<APlayerController>(PawnKilled->GetController());
     if (PlayerController)
