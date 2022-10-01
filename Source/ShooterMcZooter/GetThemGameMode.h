@@ -27,5 +27,6 @@ public:
 	virtual int32 GetScore() const override;
 
 private:
+	UPROPERTY(EditAnywhere)
 	float TimeLeft = 30.f;
 };
