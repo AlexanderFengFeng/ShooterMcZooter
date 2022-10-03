@@ -3,6 +3,7 @@
 
 #include "Gun.h"
 #include "Kismet/GameplayStatics.h"
+#include "Shooter.h"
 
 // Sets default values
 AGun::AGun()
@@ -41,12 +42,17 @@ void AGun::PullTrigger()
 	if (GunTrace(Hit, ShotDirection, OwnerController))
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(this, ImpactParticle, Hit.Location, ShotDirection.Rotation());
-		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, Hit.Location, ShotDirection.Rotation());
 		if (AActor* Actor = Hit.GetActor())
 		{
 			FPointDamageEvent DamageEvent(Damage, Hit, ShotDirection, nullptr);
 			Actor->TakeDamage(Damage, DamageEvent, OwnerController, this);
+			if (AShooter* Shooter = Cast<AShooter>(Actor))
+			{
+		        UGameplayStatics::PlaySoundAtLocation(this, MuzzleSound, Hit.Location, ShotDirection.Rotation());
+				return;
+			}
 		}
+		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, Hit.Location, ShotDirection.Rotation());
 	}
 }
 
