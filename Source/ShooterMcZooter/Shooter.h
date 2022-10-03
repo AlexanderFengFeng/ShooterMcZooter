@@ -44,6 +44,9 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	class UCameraComponent* Camera;
 
+	UPROPERTY(EditAnywhere, Category = "Sounds")
+	USoundBase* DeathSound;
+
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue);
 	void LookUp(float AxisValue);

@@ -176,6 +176,7 @@ float AShooter::TakeDamage(
 void AShooter::Die()
 {
 	SetActorEnableCollision(false);
+	UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation(), GetActorRotation());
 	AShooterMcZooterGameModeBase* GameMode = GetWorld()->GetAuthGameMode<AShooterMcZooterGameModeBase>();
 	GameMode->PawnKilled(this);
 	DetachFromControllerPendingDestroy();
