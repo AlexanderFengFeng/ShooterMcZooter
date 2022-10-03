@@ -64,5 +64,5 @@ void AGetThemGameMode::EndGame(bool bIsPlayerWinner)
 
 int32 AGetThemGameMode::GetScore() const
 {
-    return FMath::FloorToInt32(TimeLeft);
+    return FMath::CeilToInt32(TimeLeft);
 }

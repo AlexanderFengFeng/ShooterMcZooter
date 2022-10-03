@@ -28,5 +28,5 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere)
-	float TimeLeft = 30.f;
+	float TimeLeft = 600.f;
 };
