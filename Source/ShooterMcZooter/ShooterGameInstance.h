@@ -20,6 +20,8 @@ private:
 public:
 	UFUNCTION(BlueprintCallable)
 	bool TryToUpdateHighScore(int32 Score);
+	UFUNCTION(BlueprintCallable)
+	void ResetHighScore() { HighScore = 0; }
 	UFUNCTION(BlueprintPure)
 	int32 GetHighScore() const { return HighScore; }
 	UFUNCTION(BlueprintPure)
